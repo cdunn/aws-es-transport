@@ -1,4 +1,4 @@
-This product includes software developed via:
+This product includes pieces of the software below but was modified to work standalone with elasticsearch-ruby gem.
 
 Logstash-output-amazon_es Plugin
 Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
