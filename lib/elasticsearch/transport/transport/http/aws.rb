@@ -63,23 +63,25 @@ module Elasticsearch
             credentials = Aws::CredentialProviderChain.new(credential_config).resolve
 
             Connections::Collection.new \
-              :connections => hosts.map { |host|
+              connections: hosts.map { |host|
                 host[:protocol]   = host[:scheme] || DEFAULT_PROTOCOL
                 host[:port]     ||= DEFAULT_PORT
                 url               = __full_url(host)
-                aes_connection = ::Faraday::Connection.new(url, (options[:transport_options] || {})) do |faraday|
+                aes_connection = ::Faraday.new(url, (options[:transport_options] || {})) do |faraday|
                   faraday.request :aws_v4_signer,
                     credentials: credentials,
                     service_name: 'es',
                     region: region
+
+                  faraday.adapter :net_http
                 end
 
                 Connections::Connection.new \
-                  :host => host,
-                  :connection => aes_connection
+                  host: host,
+                  connection: aes_connection
               },
-              :selector_class => options[:selector_class],
-              :selector => options[:selector]
+              selector_class: options[:selector_class],
+              selector: options[:selector]
           end
 
           # Returns an array of implementation specific connection errors.
