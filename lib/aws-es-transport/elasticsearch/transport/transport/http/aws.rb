@@ -5,7 +5,7 @@ require 'elasticsearch'
 require 'elasticsearch-transport'
 
 require 'uri'
-require_relative "../../../../aws_v4_signer"
+require_relative "../../../../aws-es-transport/aws_v4_signer"
 
 module Elasticsearch
   module Transport
